@@ -1,0 +1,22 @@
+{
+  "name": "storozhev/psr7-http-message",
+  "type": "library",
+  "description": "Simple PSR-7 message implementation",
+  "authors": [{
+      "name": "Dmitry Storozhev",
+      "homepage": "https://github.com/storozhev"
+  }],
+  "license": "MIT",
+  "require": {
+    "php": ">=7.2.0",
+    "psr/http-message": "~1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^7"
+  },
+  "autoload": {
+    "psr-4": {
+        "Psr7HttpMessage\\": "src/"
+    }
+  }
+}
