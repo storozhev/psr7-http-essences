@@ -24,9 +24,9 @@ class MessageTest extends TestCase
     public function testHasHeader() {
         $message= $this->message->withHeader('test', 'a');
 
-        $this->assertEquals($message->hasHeader('test'), true);
-        $this->assertEquals($message->hasHeader('tEsT'), true);
-        $this->assertEquals($message->hasHeader('test1'), false);
+        $this->assertEquals(true, $message->hasHeader('test'));
+        $this->assertEquals(true, $message->hasHeader('tEsT'));
+        $this->assertEquals(false, $message->hasHeader('test1'));
     }
 
     public function testGetHeader() {
@@ -34,9 +34,9 @@ class MessageTest extends TestCase
             ->withHeader('a', 'aaa')
             ->withHeader('b', ['bb', 'bbb']);
 
-        $this->assertEquals($message->getHeader('a'), ['aaa']);
-        $this->assertEquals($message->getHeader('b'), ['bb', 'bbb']);
-        $this->assertEquals($message->getHeader('c'), []);
+        $this->assertEquals(['aaa'], $message->getHeader('a'));
+        $this->assertEquals(['bb', 'bbb'], $message->getHeader('b'));
+        $this->assertEquals([], $message->getHeader('c'));
     }
 
     public function testGetHeaders() {
@@ -44,10 +44,10 @@ class MessageTest extends TestCase
             ->withHeader('a', 'aaa')
             ->withHeader('b', ['b', 'bb']);
 
-        $this->assertEquals($message->getHeaders(), [
+        $this->assertEquals([
            'a' => ['aaa'],
            'b' => ['b', 'bb'],
-        ]);
+        ], $message->getHeaders());
     }
 
     public function testGetHeaderLine() {
@@ -55,8 +55,8 @@ class MessageTest extends TestCase
             ->withHeader('a', [])
             ->withHeader('b', ['bb', 'bbb']);
 
-        $this->assertEquals($message->getHeaderLine('a'), '');
-        $this->assertEquals($message->getHeaderLine('B'), 'bb, bbb');
+        $this->assertEquals('', $message->getHeaderLine('a'));
+        $this->assertEquals('bb, bbb', $message->getHeaderLine('B'));
     }
 
     public function testWithHeader() {
@@ -65,12 +65,12 @@ class MessageTest extends TestCase
             ->withHeader('b', 'bb')
             ->withHeader('B', 'bbb');
 
-        $this->assertEquals($message->getHeader('A'), ['aaa']);
-        $this->assertEquals($message->getHeader('b'), ['bbb']);
-        $this->assertEquals($message->getHeaders(), [
+        $this->assertEquals(['aaa'], $message->getHeader('A'));
+        $this->assertEquals(['bbb'], $message->getHeader('b'));
+        $this->assertEquals([
             'a' => ['aaa'],
             'B' => ['bbb'],
-        ]);
+        ], $message->getHeaders());
     }
 
     public function testWithHeaderExpectIncorrectNameException() {
@@ -91,12 +91,12 @@ class MessageTest extends TestCase
             ->withAddedHeader('b', 'bb')
             ->withAddedHeader('B', 'bbb');
 
-        $this->assertEquals($message->getHeader('A'), ['aaa']);
-        $this->assertEquals($message->getHeader('b'), ['bb', 'bbb']);
-        $this->assertEquals($message->getHeaders(), [
+        $this->assertEquals(['aaa'], $message->getHeader('A'));
+        $this->assertEquals(['bb', 'bbb'], $message->getHeader('b'));
+        $this->assertEquals([
             'a' => ['aaa'],
             'B' => ['bb', 'bbb'],
-        ]);
+        ], $message->getHeaders());
     }
 
     public function testWithAddedHeaderExpectIncorrectNameException() {
@@ -114,7 +114,7 @@ class MessageTest extends TestCase
     public function testWithProtocolVersion() {
         $message = $this->message->withProtocolVersion("1.0");
 
-        $this->assertEquals($message->getProtocolVersion(), "1.0");
+        $this->assertEquals("1.0", $message->getProtocolVersion());
     }
 
     public function testWithoutHeader() {
@@ -122,7 +122,7 @@ class MessageTest extends TestCase
             ->withHeader('a', 'aaa')
             ->withoutHeader('a');
 
-        $this->assertEquals($message->getHeaders(), []);
+        $this->assertEquals([], $message->getHeaders());
     }
 
     public function testGetBody() {
@@ -138,6 +138,4 @@ class MessageTest extends TestCase
         $this->assertNotSame($message, $this->message);
         $this->assertNotSame($newBody, $this->message->getBody());
     }
-
-
 }

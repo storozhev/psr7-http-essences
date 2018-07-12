@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 use PHPUnit\Framework\TestCase;
 use Psr7HttpMessage\Stream;
 
@@ -16,15 +15,9 @@ class StreamTest extends TestCase
     /**
      * @var string
      */
-    private $tempFilePrefix = "streamtest";
-
-    public function setUp() {
-        parent::setUp();
-    }
+    private $tempFilePrefix = "stream_test";
 
     public function tearDown() {
-        parent::tearDown();
-
         if (!is_null($this->tempFile) && is_file($this->tempFile)) {
             unlink($this->tempFile);
         }
@@ -143,7 +136,7 @@ class StreamTest extends TestCase
 
         $stream = new Stream($this->tempFile, $mode);
 
-        $this->assertSame($stream->isReadable(), $expected);
+        $this->assertSame($expected, $stream->isReadable());
     }
 
 
@@ -198,7 +191,7 @@ class StreamTest extends TestCase
 
         $stream = new Stream($this->tempFile, $mode);
 
-        $this->assertSame($stream->isWritable(), $expected);
+        $this->assertSame($expected, $stream->isWritable());
     }
 
 
@@ -235,7 +228,7 @@ class StreamTest extends TestCase
         } else {
             $stream = new Stream($source, $mode);
         }
-        $this->assertSame($stream->isSeekable(), $expected);
+        $this->assertSame($expected, $stream->isSeekable());
     }
 
     public function testGetMetadata() {

@@ -180,7 +180,6 @@ class UriTest extends TestCase
         $this->assertSame($uri, $uriCopy);
     }
 
-
     public function testGetFragment() {
         $this->assertEquals('fragment', $this->uri->getFragment());
     }
@@ -268,7 +267,6 @@ class UriTest extends TestCase
         $this->assertEquals('user:password', $this->uri->getUserInfo());
     }
 
-
     public function testWithUserInfo() {
         $uri = $this->uri->withUserInfo('user', 'password');
 
@@ -312,5 +310,4 @@ class UriTest extends TestCase
         $uri3 = $uri2->withPath('/foo/');
         $this->assertEquals('https://user:password@domain.zone/foo/?a=1&b=2#bar', (string) $uri3);
     }
-
 }

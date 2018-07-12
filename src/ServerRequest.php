@@ -3,6 +3,7 @@
 namespace Psr7HttpMessage;
 
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -34,12 +35,12 @@ class ServerRequest extends Request
     /**
      * @var array
      */
-    protected $queryParams = [];
+    protected $queryParams;
 
     /**
      * @var array
      */
-    protected $uploadedFiles = [];
+    protected $uploadedFiles;
 
     /**
      * @var array|\object|null
@@ -57,6 +58,7 @@ class ServerRequest extends Request
      * @param array $serverParams
      * @param array $uploadedFiles
      * @param array|\object|null $parsedBody
+     * @throws \InvalidArgumentException
      */
     public function __construct(
         $uri,
@@ -75,6 +77,7 @@ class ServerRequest extends Request
         $this->cookieParams = $cookies;
         $this->queryParams = $queryParams;
         $this->serverParams = $serverParams;
+        $this->assertValidUploadedFilesTree($uploadedFiles);
         $this->uploadedFiles = $uploadedFiles;
         $this->parsedBody = $parsedBody;
     }
@@ -178,10 +181,31 @@ class ServerRequest extends Request
 
 
     /**
+     * @param $tree array
+     * @throws \InvalidArgumentException if an invalid structure is provided.
+     */
+    private function assertValidUploadedFilesTree(array $tree) {
+        foreach ($tree as $leaf) {
+            if (is_array($leaf)) {
+                $this->assertValidUploadedFilesTree($leaf);
+                continue;
+            }
+
+            if (! $leaf instanceof UploadedFileInterface) {
+                throw new \InvalidArgumentException('An element in this tree must be an instance of ' . UploadedFileInterface::class );
+            }
+        }
+    }
+
+
+    /**
      * @param array $uploadedFiles
      * @return static
+     * @throws \InvalidArgumentException if an invalid structure is provided.
      */
     public function withUploadedFiles(array $uploadedFiles): self {
+        $this->assertValidUploadedFilesTree($uploadedFiles);
+
         $instance = clone $this;
 
         $instance->uploadedFiles = $uploadedFiles;

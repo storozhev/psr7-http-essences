@@ -9,7 +9,10 @@ class ResponseTest extends TestCase
 
     public function testConstructorWithInvalidHeaderValue() {
         $response = new Response('php://memory', 200, '', ['foo' => ' bar', 'hello' => '\t   world  ']);
-        $this->assertEquals(['foo' => ['bar'], 'hello' => ['world']], $response->getHeaders());
+        $this->assertEquals(
+            ['foo' => ['bar'], 'hello' => ['world']],
+            $response->getHeaders()
+        );
     }
 
     public function constructorWithHeadersProvider() {

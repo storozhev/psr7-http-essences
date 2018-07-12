@@ -4,17 +4,26 @@ declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
 use Psr7HttpMessage\ServerRequest;
+use Psr7HttpMessage\UploadedFile;
+use Psr\Http\Message\UploadedFileInterface;
+use Psr7HttpMessage\Stream;
 
 class ServerRequestTest extends TestCase
 {
-
     /**
      * @var ServerRequest
      */
     private $serverRequest;
 
+    /**
+     * @var UploadedFileInterface
+     */
+    private $uploadedFile;
+
     public function setUp() {
         parent::setUp();
+
+        $this->uploadedFile = new UploadedFile(new Stream('php://input'), 10, UPLOAD_ERR_OK);
 
         $this->serverRequest = (new ServerRequest(
             '/?foo=bar',
@@ -24,7 +33,7 @@ class ServerRequestTest extends TestCase
             ['cookie1' => 'value1'], // cookies
             ['qParam1' => 'qValue1'], // queryParams
             ['sp1' => 'value'], // serverParams
-            [], // uploadedFiles todo
+            [$this->uploadedFile], // uploadedFiles
             ['data'] // parsedBody
         ))->withAttribute('foo', 'bar');
     }
@@ -78,11 +87,39 @@ class ServerRequestTest extends TestCase
     }
 
     public function testGetUploadedFiles() {
-        // todo
+        $this->assertEquals([$this->uploadedFile], $this->serverRequest->getUploadedFiles());
+    }
+
+    public function uploadedFilesInvalidTreeProvider() {
+        return [
+            [[1]],
+            [[false]],
+            [[new stdClass()]],
+            [[new UploadedFile(new Stream('php://stdin'), 20, UPLOAD_ERR_OK), [null]]]
+        ];
+    }
+
+    /**
+     * @param $argument array
+     * @dataProvider uploadedFilesInvalidTreeProvider
+     */
+    public function testWithUploadedFilesWithInvalidFilesTree($argument) {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $this->serverRequest->withUploadedFiles($argument);
     }
 
     public function testWithUploadedFiles() {
-        // todo
+        $uploadedFile = new UploadedFile(new Stream('php://memory'), 10, UPLOAD_ERR_OK);
+        $anotherUploadedFile = new UploadedFile(new Stream('php://stdin'), 10, UPLOAD_ERR_OK);
+
+        $tree = [$uploadedFile, [$anotherUploadedFile]];
+
+        $anotherServerRequest = $this->serverRequest->withUploadedFiles($tree);
+
+        $this->assertNotSame($this->serverRequest, $anotherServerRequest);
+
+        $this->assertEquals([$uploadedFile, [$anotherUploadedFile]], $anotherServerRequest->getUploadedFiles());
     }
 
     public function testGetParsedBody() {
@@ -131,6 +168,4 @@ class ServerRequestTest extends TestCase
     public function testGetServerParams() {
         $this->assertEquals(['sp1' => 'value'], $this->serverRequest->getServerParams());
     }
-
-
 }
