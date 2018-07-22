@@ -199,8 +199,8 @@ class StreamTest extends TestCase
         return [
             // source mode expected
             ['php://memory', 'rb', true],
-            ['php://stdin', 'rb', false],
-            ['php://stdout', 'rb', false],
+            ['php://input', 'rb', true],
+            ['php://output', 'wb', false],
             ['file', 'rb', true],
         ];
     }
