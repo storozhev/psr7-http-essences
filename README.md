@@ -1,5 +1,5 @@
 # psr7-http-essences
-### This is my own implementation of [psr7 Http messages interfaces](https://www.php-fig.org/psr/psr-7/)
+### This is my own implementation of [psr7 Http message interfaces](https://www.php-fig.org/psr/psr-7/)
 
 [![Build Status](https://travis-ci.com/storozhev/psr7-http-message.svg?branch=master)](https://travis-ci.com/storozhev/psr7-http-message)
 [![codecov](https://codecov.io/gh/storozhev/psr7-http-message/branch/master/graph/badge.svg)](https://codecov.io/gh/storozhev/psr7-http-message)
