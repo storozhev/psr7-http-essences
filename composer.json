@@ -1,11 +1,14 @@
 {
-  "name": "storozhev/psr7-http-message",
+  "name": "storozhev/psr7-http-essences",
   "type": "library",
   "description": "Simple PSR-7 message implementation",
   "authors": [{
       "name": "Dmitry Storozhev",
       "homepage": "https://github.com/storozhev"
   }],
+  "keywords": [
+    "psr7", "http", "message", "essences", "http-message"
+  ],
   "license": "MIT",
   "require": {
     "php": ">=7.1",
