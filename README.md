@@ -4,4 +4,8 @@
 [![Build Status](https://travis-ci.com/storozhev/psr7-http-message.svg?branch=master)](https://travis-ci.com/storozhev/psr7-http-message)
 [![codecov](https://codecov.io/gh/storozhev/psr7-http-message/branch/master/graph/badge.svg)](https://codecov.io/gh/storozhev/psr7-http-message)
 
-#### To use this package you must have php version >= 7.1 or hhvm >= 3.21
+Note: To use this package you must have php version >= 7.1 or hhvm >= 3.21
+
+## Adding
+`composer require storozhev/psr7-http-essences`
+
