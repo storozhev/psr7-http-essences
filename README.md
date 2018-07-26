@@ -3,6 +3,8 @@
 
 [![Build Status](https://travis-ci.com/storozhev/psr7-http-essences.svg?branch=master)](https://travis-ci.com/storozhev/psr7-http-essences)
 [![codecov](https://codecov.io/gh/storozhev/psr7-http-essences/branch/master/graph/badge.svg)](https://codecov.io/gh/storozhev/psr7-http-essences)
+[![License](https://img.shields.io/packagist/l/storozhev/psr7-http-essences.svg?style=plastic)](https://packagist.org/packages/storozhev/psr7-http-essences)
+
 
 Note: To use this package you must have php version >= 7.1 or hhvm >= 3.21
 
